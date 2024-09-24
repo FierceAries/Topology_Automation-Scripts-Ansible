@@ -1,0 +1,87 @@
+---
+- hosts: web
+  gather_facts: yes
+  vars:
+    fwd: 9.9.9.9
+    zone: spr500.ca
+    Z: 4
+    p1: 2128
+    p2: 3028
+  tasks:
+    - name: Install apache2
+      package:
+        name: apache2
+        state: present
+    - name: Adding apache2.conf
+      template:
+        dest: /etc/apache2/apache2.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/apache2.conf.j2
+    - name: Adding ports.conf
+      template:
+        dest: /etc/apache2/ports.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/ports.conf.j2
+    - name: Add sites-enabled folder
+      file:
+        path: /etc/apache2/sites-enabled
+        state: directory
+    - name: Add certs folder
+      file:
+        path: /etc/apache2/certs
+        state: directory
+    - name: Add conf-enabled folder
+      file:
+        path: /etc/apache2/conf-enabled
+        state: directory
+    - name: Add 000-default.conf
+      template:
+        dest: /etc/apache2/sites-enabled/000-default.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/sites-enabled/000-default.conf.j2
+    - name: Add default-ssl.conf
+      template:
+        dest: /etc/apache2/sites-enabled/default-ssl.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/sites-enabled/default-ssl.conf.j2
+    - name: Add apache.crt
+      template:
+        dest: /etc/apache2/certs/apache.crt
+        src: /root/Ansible_Playnbooks/Web/apache2/certs/apache.crt
+    - name: Add apache.key
+      template:
+        dest: /etc/apache2/certs/apache.key
+        src: /root/Ansible_Playnbooks/Web/apache2/certs/apache.key
+    - name: Add charset.conf
+      template:
+        dest: /etc/apache2/conf-enabled/charset.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/charset.conf
+    - name: Add javascript-common.conf
+      template:
+        dest: /etc/apache2/conf-enabled/javascript-common.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/javascript-common.conf
+    - name: Add localized-error-pages.conf
+      template:
+        dest: /etc/apache2/conf-enabled/localized-error-pages.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/localized-error-pages.conf
+    - name: Add other-vhosts-access-log.conf
+      template:
+        dest: /etc/apache2/conf-enabled/other-vhosts-access-log.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/other-vhosts-access-log.conf
+    - name: Add security.conf
+      template:
+        dest: /etc/apache2/conf-enabled/security.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/security.conf
+    - name: Add serve-cgi-bin.conf
+      template:
+        dest: /etc/apache2/conf-enabled/serve-cgi-bin.conf
+        src: /root/Ansible_Playnbooks/Web/apache2/conf-enabled/serve-cgi-bin.conf
+    - name: a2enmod ssl
+      ansible.builtin.shell:
+        cmd: a2enmod ssl
+    - name: a2enmod rewrite
+      ansible.builtin.shell:
+        cmd: a2enmod rewrite
+    - name: Restart Apache2
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+        enabled: true
+
+

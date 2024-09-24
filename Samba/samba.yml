@@ -1,0 +1,28 @@
+---
+- hosts: r2
+  gather_facts: yes
+  vars:
+    fwd: 9.9.9.9
+    zone: spr500.ca
+    Z: 4
+    p1: 2128
+    p2: 3028
+    fd: O4
+  tasks:
+    - name: Install Samba
+      package:
+        name: samba
+        state: present
+    - name: Adding smb.conf
+      template:
+        dest: /etc/samba/smb.conf
+        src: /root/Ansible_Playnbooks/Samba/smb.conf.j2
+    - name: Adding shared SMB folder
+      file:
+        path: /home/fd
+        state: directory
+    - name: Restart Samba
+      ansible.builtin.service:
+        name: smbd
+        state: restarted
+        enabled: true

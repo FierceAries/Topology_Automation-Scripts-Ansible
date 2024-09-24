@@ -1,0 +1,44 @@
+---
+- hosts: dns
+  gather_facts: yes
+  vars:
+    fwd: 9.9.9.9
+    zone: spr500.ca
+    Z: 4
+  tasks:
+    - name: Install Bind9
+      package:
+        name: bind9
+        state: present
+    - name: Add named.conf.local
+      template:
+        dest: /etc/bind/named.conf.local
+        src: /root/Ansible_Playnbooks/DNS/bind/named.conf.local.j2
+    - name: Add named.conf.options
+      template:
+        dest: /etc/bind/named.conf.options
+        src: /root/Ansible_Playnbooks/DNS/bind/named.conf.options.j2
+    - name: Add zones folder
+      file:
+        path: /etc/bind/zones
+        state: directory
+    - name: Add zones file to zones folder
+      template:
+        dest: /etc/bind/zones/spr500.ca
+        src: /root/Ansible_Playnbooks/DNS/bind/spr500.ca.j2
+      notify: restart bind9
+    - name: Add named.conf.default-zones
+      template:
+        dest: /etc/bind/named.conf.default-zones
+        src: /root/Ansible_Playnbooks/DNS/bind/named.conf.default-zones.j2
+    - name: Adding the named.conf file
+      template:
+        dest: /etc/bind/named.conf
+        src: /root/Ansible_Playnbooks/DNS/bind/named.conf.j2 
+  handlers:
+    - name: restart bind9
+      service:
+        name: bind9
+        state: restarted
+        enabled: yes
+      tags: bind9

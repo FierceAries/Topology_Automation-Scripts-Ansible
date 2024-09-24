@@ -1,0 +1,25 @@
+---
+
+ - name: Password Change
+
+   hosts: all
+
+   become: true
+
+   vars:
+
+     user: "root"
+
+     paswd: "lol123"
+
+   tasks:
+
+    - name : change password
+
+      ansible.builtin.user:
+
+         name: "{{ user }}"
+
+         state: present
+
+         password: "{{ paswd | password_hash('sha512') }}"

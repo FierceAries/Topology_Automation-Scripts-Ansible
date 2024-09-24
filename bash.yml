@@ -1,0 +1,71 @@
+---
+  - name: Bash Prompt for localhost
+    hosts: localhost
+
+    tasks:
+      - name: "Changing the Bash prompt of the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /root/.bashrc
+          line: PS1="\e[31m\]Workstation\e[32m\] Usman \e[36m\]\d \e[m\]\t->"
+
+
+  - name: Bash Prompt for r1
+    hosts: r1
+
+    tasks:
+      - name: "Changing the Bash prompt of the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /root/.bashrc
+          line: PS1="\e[31m\]R1\e[32m\] Usman \e[36m\]\d \e[m\]\t->"
+
+
+  - name: Bash Prompt for r2
+    hosts: r2
+
+    tasks:
+      - name: "Changing the Bash prompt of the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /root/.bashrc
+          line: PS1="\e[31m\]R2\e[32m\] Usman \e[36m\]\d \e[m\]\t->"
+
+
+  - name: Bash Prompt for DNS
+    hosts: dns
+
+    tasks:
+      - name: "Changing the Bash prompt of the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /root/.bashrc
+          line: PS1="\e[31m\]DNS\e[32m\] Usman \e[36m\]\d \e[m\]\t->"
+
+
+  - name: Bash Prompt for Webserver
+    hosts: web
+
+    tasks:
+      - name: "Changing the Bash prompt of the file"
+        become: yes
+        become_user: root
+        tags: example1
+        lineinfile:
+          path: /root/.bashrc
+          line: PS1="\e[31m\]Webserver\e[32m\] Usman \e[36m\]\d \e[m\]\t->"
+  - hosts: all
+    tasks:
+      - name: Apply Prpmt
+        become: yes
+        shell: source /root/.bashrc
+        args:
+          executable: /bin/bash

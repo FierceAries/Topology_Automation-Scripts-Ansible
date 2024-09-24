@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: yes
+  vars:
+    i: 4
+    zone: spr500.ca
+  tasks:
+    - name: Change DNS Resolve settings for resolv.conf
+      template:
+         dest: /etc/resolv.conf
+         src: /root/Ansible_Playnbooks/DNS/resolv.conf.j2

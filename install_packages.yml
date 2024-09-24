@@ -1,0 +1,47 @@
+---
+
+- hosts: all
+
+  tasks:
+
+  - name: Package installation
+
+    apt:
+
+      name:
+
+        - ssh
+
+        - wget
+
+        - curl
+
+        - python3
+
+        - resolvconf
+
+        - iptables-persistent
+
+        - unzip
+
+        - tcpdump
+
+        - python3
+
+        - python3-pip
+
+        - zip
+
+        - openssl
+
+        - plocate
+
+        - bind9utils
+
+        - tree
+
+        - cifs-utils
+
+        - dnsutils
+
+      state: latest

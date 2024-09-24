@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: Apply Prpmt
+      become: yes
+      shell: source /root/.bashrc
+      args:
+         executable: /bin/bash

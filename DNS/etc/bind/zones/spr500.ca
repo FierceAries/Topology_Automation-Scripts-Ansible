@@ -1,0 +1,32 @@
+$TTL    604800
+
+@       IN      SOA     ns1.spr500.ca. root.spr500.ca. (
+
+                  3       ; Serial
+
+             604800     ; Refresh
+
+              86400     ; Retry
+
+            2419200     ; Expire
+
+             604800 )   ; Negative Cache TTL
+
+;
+
+; name servers - NS records
+
+     IN      NS      ns1.spr500.ca.
+
+
+
+; name servers - A records
+
+@                                   IN      A      172.15.4.11
+ns1.spr500.ca.                      IN      A      172.15.4.12
+
+server.spr500.ca.                   IN      A      172.15.4.11
+
+www.T-4.spr500.ca.                  IN      A      172.15.4.12
+
+www-1.T-4.spr500.ca.                IN      A      172.15.4.12

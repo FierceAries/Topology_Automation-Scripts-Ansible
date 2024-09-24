@@ -1,0 +1,7 @@
+---
+  - hosts: all
+    gather_facts: yes
+    tasks:
+    - name: Changing date and time
+      ansible.builtin.shell:
+        cmd: timedatectl set-timezone America/Toronto

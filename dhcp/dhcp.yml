@@ -1,0 +1,29 @@
+---
+- hosts: r2
+  gather_facts: yes
+  vars:
+    subnet: 172.15.4.0
+    netmask: 255.255.255.248
+    range: 172.15.4.5
+    routers: 172.15.4.1
+    opdns: 172.15.4.11
+    opdn: spr500.ca
+    interface: 
+  tasks:
+    - name: Install DHCP Server
+      package:
+        name: isc-dhcp-server
+        state: present
+    - name: Add dhcpd.conf
+      template:
+        dest: /etc/dhcp/dhcpd.conf
+        src: /root/Ansible_Playnbooks/dhcp/dhcpd.conf.j2
+    - name: Add dhcpd.conf
+      template:
+        dest: /etc/default/isc-dhcp-server
+        src: /root/Ansible_Playnbooks/dhcp/isc-dhcp-server.j2
+    - name: Restart Apache2
+      ansible.builtin.service:
+        name: isc-dhcp-server
+        state: restarted
+        enabled: true

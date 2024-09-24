@@ -1,0 +1,20 @@
+default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+ 
+subnet {{ subnet }} netmask {{ netmask }} {
+ range {{  range }};
+ option routers {{ routers }};
+ option domain-name-servers {{ opdns }};
+ option domain-name "{{ opdn }}";
+}
+
+#host LAPTOP-87PEVVO6 {
+#hardware ethernet 08:97:98:D2:41:14;
+#fixed-address 172.15.4.4;
+#}
+host r1 {
+hardware ethernet 00:0C:29:75:52:9b;
+fixed-address 172.15.4.5;
+}
+
